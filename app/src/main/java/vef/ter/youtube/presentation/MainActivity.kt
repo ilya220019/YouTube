@@ -11,8 +11,5 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        BuildConfig.API_KEY
-        BuildConfig.BASE_URL
-
     }
 }

@@ -44,15 +44,15 @@
 
             <TextView
                 android:id="@+id/tv_in_img_playlist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_40dp"
+                android:layout_height="@dimen/_16dp"
                 android:layout_marginStart="@dimen/_52dp"
                 android:text="@string/playlist"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12sp"
-                app:layout_constraintBottom_toBottomOf="@id/img_transparent"
                 app:layout_constraintStart_toStartOf="@id/img_transparent"
-                app:layout_constraintTop_toTopOf="@id/img_transparent" />
+                app:layout_constraintTop_toTopOf="@id/img_transparent"
+                app:layout_constraintBottom_toBottomOf="@id/img_transparent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
