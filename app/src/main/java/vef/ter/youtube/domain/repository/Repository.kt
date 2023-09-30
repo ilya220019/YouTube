@@ -20,7 +20,8 @@ internal class Repository(private val apiService: ApiService) {
             channelId = Constants.CHANNEL_ID,
             apiKey = BuildConfig.API_KEY,
             maxResult = 10,
-        ).enqueue(
+        )
+            .enqueue(
             object : Callback<PlayListsModel> {
 
                 override fun onResponse(
