@@ -1,4 +1,4 @@
-package com.slottica.reviewfueatures.youtube57_3.presetation.playlists
+package vef.ter.youtube.presentation.playlists
 
 import androidx.lifecycle.LiveData
 import vef.ter.youtube.core.base.BaseViewModel

@@ -1,13 +1,13 @@
 package vef.ter.youtube.core.network
 
-import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 import vef.ter.youtube.data.model.PlayListsModel
 
 internal interface ApiService {
     @GET("playlists")
-    fun getPlayLists(
+    suspend fun getPlayLists(
         @Query("part")
         part: String,
         @Query("key")
@@ -17,5 +17,5 @@ internal interface ApiService {
         @Query("maxResults")
         maxResult: Int
 
-    ): Call<PlayListsModel>
+    ): Response<PlayListsModel>
 }

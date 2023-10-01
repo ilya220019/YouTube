@@ -50,9 +50,9 @@
                 android:text="@string/playlist"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12sp"
+                app:layout_constraintBottom_toBottomOf="@id/img_transparent"
                 app:layout_constraintStart_toStartOf="@id/img_transparent"
-                app:layout_constraintTop_toTopOf="@id/img_transparent"
-                app:layout_constraintBottom_toBottomOf="@id/img_transparent" />
+                app:layout_constraintTop_toTopOf="@id/img_transparent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

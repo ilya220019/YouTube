@@ -10,8 +10,7 @@ import androidx.viewbinding.ViewBinding
 abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     private var _binding: VB? = null
-    protected val binding get() = _binding!!
-
+    val binding get() = _binding!!
     protected abstract fun inflaterViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -26,8 +25,18 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         return binding.root
     }
 
+    abstract fun init()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        checkConnection()
+        init()
+    }
+
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
+
+    abstract fun checkConnection()
 }

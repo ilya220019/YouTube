@@ -4,4 +4,5 @@
     <color name="black_80">#CC000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#7B7D7E</color>
+    <color name="orange">#FF5722</color>
 </resources>

@@ -16,7 +16,10 @@ internal class PlaylistsAdapter : RecyclerView.Adapter<PlaylistsAdapter.Playlist
     fun addData(playlistModelItem: List<PlayListsModel.Item>) {
         _list.clear()
         _list.addAll(playlistModelItem)
-        notifyItemRangeInserted(_list.size, playlistModelItem.size - _list.size)
+        notifyItemRangeInserted(
+            _list.size,
+            playlistModelItem.size - _list.size
+        )
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistsViewHolder {

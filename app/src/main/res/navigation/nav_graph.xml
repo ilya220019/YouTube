@@ -15,4 +15,9 @@
         android:name="vef.ter.youtube.presentation.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
+    <fragment
+        android:id="@+id/noConnectFragment"
+        android:name="vef.ter.youtube.presentation.nocon.NoConnectFragment"
+        android:label="fragment_no_connect"
+        tools:layout="@layout/fragment_no_connect" />
 </navigation>
