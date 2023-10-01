@@ -15,9 +15,8 @@ import vef.ter.youtube.utils.Online
 internal class PlayListFragment : BaseFragment<FragmentPlayListBinding, PlaylistsViewModel>() {
     private val playListsViewModel = PlaylistsViewModel(MainActivity.repository)
     private val adapter = PlaylistsAdapter()
-    private val factory = MainActivity.repository
     override val viewModel: PlaylistsViewModel
-        get() = factory as PlaylistsViewModel
+        get() = MainActivity.repository as PlaylistsViewModel
 
     override fun inflaterViewBinding(
         inflater: LayoutInflater, container: ViewGroup?
