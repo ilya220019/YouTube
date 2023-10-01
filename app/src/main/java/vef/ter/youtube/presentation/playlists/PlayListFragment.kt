@@ -12,9 +12,13 @@ import vef.ter.youtube.databinding.FragmentPlayListBinding
 import vef.ter.youtube.presentation.MainActivity
 import vef.ter.youtube.utils.Online
 
-internal class PlayListFragment : BaseFragment<FragmentPlayListBinding>() {
+internal class PlayListFragment : BaseFragment<FragmentPlayListBinding, PlaylistsViewModel>() {
     private val playListsViewModel = PlaylistsViewModel(MainActivity.repository)
     private val adapter = PlaylistsAdapter()
+    private val factory = MainActivity.repository
+    override val viewModel: PlaylistsViewModel
+        get() = factory as PlaylistsViewModel
+
     override fun inflaterViewBinding(
         inflater: LayoutInflater, container: ViewGroup?
     ) = FragmentPlayListBinding.inflate(inflater, container, false)
@@ -27,6 +31,7 @@ internal class PlayListFragment : BaseFragment<FragmentPlayListBinding>() {
                     binding.progressBar.visibility = View.GONE
                     resource.data?.let { adapter.addData(it.items) }
                     binding.rv.adapter = adapter
+                    conect()
                 }
 
                 Status.ERROR -> {
@@ -44,11 +49,13 @@ internal class PlayListFragment : BaseFragment<FragmentPlayListBinding>() {
         }
     }
 
-    override fun checkConnection() {
+    private fun conect() {
         Online(requireContext()).observe(viewLifecycleOwner) {
-            if (!it)
+            if (!it) {
                 findNavController().navigate(R.id.noConnectFragment)
+            }
         }
     }
+
 
 }
