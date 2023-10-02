@@ -34,18 +34,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : Fragment() {
     abstract fun init()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        hasConnection()
         init()
-    }
-
-    private fun hasConnection() {
-        val cm =
-            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val connectionInfo = cm.activeNetwork
-        if (connectionInfo != null) {
-            init()
-        } else
-            findNavController().navigate(R.id.noConnectFragment)
     }
 
     override fun onDestroy() {
