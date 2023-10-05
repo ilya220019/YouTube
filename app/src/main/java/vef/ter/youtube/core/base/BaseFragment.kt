@@ -31,11 +31,16 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : Fragment() {
         return binding.root
     }
 
+    abstract fun connect()
     abstract fun init()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        connect()
         init()
+        initView()
     }
+    abstract fun initView()
 
     override fun onDestroy() {
         super.onDestroy()
