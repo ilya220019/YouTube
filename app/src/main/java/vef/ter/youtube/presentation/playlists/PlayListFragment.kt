@@ -3,6 +3,7 @@ package vef.ter.youtube.presentation.playlists
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import vef.ter.youtube.core.base.BaseFragment
 import vef.ter.youtube.databinding.FragmentPlayListBinding
 import vef.ter.youtube.presentation.MainActivity
@@ -41,6 +42,13 @@ internal class PlayListFragment : BaseFragment<FragmentPlayListBinding, Playlist
     }
 
     override fun init() {
+        viewModel.loading.observe(viewLifecycleOwner){
+            Toast.makeText(requireContext(), "loading", Toast.LENGTH_SHORT).show()
+
+        }
+        viewModel.error.observe(viewLifecycleOwner){
+            Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
+        }
         viewModel.playLists.observe(viewLifecycleOwner) {
             adapter.addData(it.items)
         }
