@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import vef.ter.youtube.BuildConfig
 import java.util.concurrent.TimeUnit
 
-internal class RetrofitClient {
+class RetrofitClient {
     fun createApiService(): ApiService {
         val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         val okHttpClient =

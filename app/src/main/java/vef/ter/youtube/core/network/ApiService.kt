@@ -5,7 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import vef.ter.youtube.data.model.PlayListsModel
 
-internal interface ApiService {
+interface ApiService {
     @GET("playlists")
     suspend fun getPlayLists(
         @Query("part")
@@ -17,5 +17,13 @@ internal interface ApiService {
         @Query("maxResults")
         maxResult: Int
 
+    ): Response<PlayListsModel>
+
+    @GET("playlistItems")
+    suspend fun getPlaylistItems(
+        @Query("part") part: String,
+        @Query("key") apiKey: String,
+        @Query("playlistId") playlistId: String,
+        @Query("maxResults") maxResults: Int
     ): Response<PlayListsModel>
 }

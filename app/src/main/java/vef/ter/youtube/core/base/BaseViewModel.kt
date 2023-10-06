@@ -10,32 +10,24 @@ import kotlinx.coroutines.launch
 open class BaseViewModel : ViewModel() {
     protected val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> get() = _loading
-    protected val _error = MutableLiveData<String>()
+    private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
     fun <T> doOperation(
-        operation: suspend ()->Result<T>,
+        operation: suspend () -> Result<T>,
         success: (T) -> Unit
-    ){
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             _loading.postValue(true)
             val result = operation()
-            when{
-                result.isSuccess -> {
-                    result.onSuccess(success)
+            when {
+                result.isSuccess -> result.onSuccess(success)
+                result.isFailure -> result.onFailure {
+                    if (!it.message.isNullOrEmpty())
+                        _error.postValue(it.message)
                 }
-                    result.isFailure-> {
-                        result.onFailure{
-                            exception: Throwable ->
-                            if (!exception.message.isNullOrEmpty()){
-                                _error.postValue(exception.message)
-                            }
+            }
 
-
-                        }
-                _loading.postValue(false)
-
-            }            }
-
+            _loading.postValue(false)
         }
     }
 }

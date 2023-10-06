@@ -15,6 +15,9 @@
     <dimen name="_32dp">32dp</dimen>
     <dimen name="_240dp">240dp</dimen>
     <dimen name="_260dp">260dp</dimen>
+    <dimen name="_17sp">17sp</dimen>
+    <dimen name="_20sp">20sp</dimen>
+    <dimen name="_24sp">24sp</dimen>
 
     />
 </resources>
