@@ -1,4 +1,4 @@
-package com.example.youtube57.presentation.video
+package vef.ter.youtube.presentation.video
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

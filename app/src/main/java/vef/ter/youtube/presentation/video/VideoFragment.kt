@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import coil.load
-import com.example.youtube57.presentation.video.VideoViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import vef.ter.youtube.R
 import vef.ter.youtube.core.base.BaseFragment
