@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import vef.ter.youtube.R
 import vef.ter.youtube.core.base.BaseFragment
 import vef.ter.youtube.data.model.PlayListsModel
@@ -19,7 +20,7 @@ import vef.ter.youtube.utils.Online
 class PlayListFragment : BaseFragment<FragmentPlayListBinding, PlaylistsViewModel>() {
     private val adapter = PlaylistsAdapter(this::onClickItem)
 
-    override val viewModel = PlaylistsViewModel(MainActivity.repository)
+    override val viewModel: PlaylistsViewModel by viewModel()
     private val aOnline: Online by lazy {
         Online(requireContext())
     }

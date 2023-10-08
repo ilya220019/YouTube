@@ -5,4 +5,6 @@ object Constants {
     const val PART = "snippet, contentDetails"
     const val GO_TO_DETAIL_FRAGMENT = "go_to_detail_fragment"
     const val SET_ITEM = "set_item"
+    const val GO_TO_VIDEO_FRAGMENT = "go_to_video_fragment"
+    const val SET_ITEM_TO_VIDEO = "set_item_video"
 }

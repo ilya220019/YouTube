@@ -17,6 +17,7 @@ data class PlayListsModel(
         val snippet: Snippet
     ) : Serializable {
         data class ContentDetails(
+            val videoId: String,
             val itemCount: Int
         )
 

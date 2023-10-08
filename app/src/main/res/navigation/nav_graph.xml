@@ -15,4 +15,10 @@
         android:name="vef.ter.youtube.presentation.item.DetailItemFragment"
         android:label="fragment_detail_item"
         tools:layout="@layout/fragment_detail_item" />
+    <fragment
+        android:id="@+id/videoFragment"
+        android:name="vef.ter.youtube.presentation.video.VideoFragment"
+        android:label="fragment_video"
+        tools:layout="@layout/fragment_video" />
+
 </navigation>

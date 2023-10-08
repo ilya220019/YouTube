@@ -7,7 +7,8 @@ import coil.load
 import vef.ter.youtube.data.model.PlayListsModel
 import vef.ter.youtube.databinding.ItemForPlaylistBinding
 
-class DetailItemsAdapter : RecyclerView.Adapter<DetailItemsAdapter.PlaylistItemsViewHolder>() {
+class DetailItemsAdapter(private val onClickItem: (playlistItem: PlayListsModel.Item) -> Unit) :
+    RecyclerView.Adapter<DetailItemsAdapter.PlaylistItemsViewHolder>() {
 
     private var _list = mutableListOf<PlayListsModel.Item>()
     private val list: List<PlayListsModel.Item> get() = _list
@@ -38,6 +39,7 @@ class DetailItemsAdapter : RecyclerView.Adapter<DetailItemsAdapter.PlaylistItems
         fun bind(item: PlayListsModel.Item) {
             binding.tvVideoName.text = item.snippet.title
             binding.imgVideo.load(item.snippet.thumbnails.default.url)
+            itemView.setOnClickListener { onClickItem(item) }
         }
 
     }

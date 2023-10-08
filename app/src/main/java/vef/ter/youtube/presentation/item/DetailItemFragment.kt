@@ -6,18 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import vef.ter.youtube.R
 import vef.ter.youtube.core.base.BaseFragment
 import vef.ter.youtube.data.model.PlayListsModel
 import vef.ter.youtube.databinding.FragmentDetailItemBinding
-import vef.ter.youtube.presentation.MainActivity
 import vef.ter.youtube.utils.Constants
 import vef.ter.youtube.utils.Online
 
 class DetailItemFragment : BaseFragment<FragmentDetailItemBinding, DetailItemsViewModel>() {
-    private val adapter = DetailItemsAdapter()
-    override val viewModel = DetailItemsViewModel(MainActivity.repository)
+    private val adapter = DetailItemsAdapter(this::onClickItem)
+    override val viewModel: DetailItemsViewModel by viewModel()
     private val online: Online by lazy {
         Online(requireContext())
     }
@@ -40,7 +43,7 @@ class DetailItemFragment : BaseFragment<FragmentDetailItemBinding, DetailItemsVi
 
     private fun initLiveData() {
         viewModel.playlistItems.observe(viewLifecycleOwner) { list ->
-            initRecycler(list.items)
+            init(list.items)
         }
 
         viewModel.loading.observe(viewLifecycleOwner) { loading ->
@@ -55,7 +58,7 @@ class DetailItemFragment : BaseFragment<FragmentDetailItemBinding, DetailItemsVi
         }
     }
 
-    private fun initRecycler(items: List<PlayListsModel.Item>) {
+    private fun init(items: List<PlayListsModel.Item>) {
         adapter.addData(items)
         binding.rvPlaylistItems.adapter = adapter
     }
@@ -96,5 +99,12 @@ class DetailItemFragment : BaseFragment<FragmentDetailItemBinding, DetailItemsVi
         }
     }
 
+    private fun onClickItem(playlistItem: PlayListsModel.Item) {
+        setFragmentResult(
+            Constants.GO_TO_VIDEO_FRAGMENT,
+            bundleOf(Constants.SET_ITEM_TO_VIDEO to playlistItem)
+        )
+        findNavController().navigate(R.id.videoFragment)
+    }
 }
 
