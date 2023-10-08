@@ -32,27 +32,27 @@ class VideoFragment : BaseFragment<FragmentVideoBinding, VideoViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initResultListener()
+        init()
         checkConnection()
         initLiveData()
         initListener()
     }
 
     private fun initListener() {
-        binding.layoutToolbarItems.btnBack.setOnClickListener {
+        binding.layoutToolbar.btnBack.setOnClickListener {
             findNavController().navigateUp()
         }
-        binding.btnDownloadVideo.setOnClickListener {
-            download()
+        binding.btnDownload.setOnClickListener {
+            down()
         }
     }
 
-    private fun download() {
+    private fun down() {
         val alertDialog = AlertDialog.Builder(requireContext())
         alertDialog.setView(R.layout.layout_download).show()
     }
 
-    private fun initResultListener() {
+    private fun init() {
         setFragmentResultListener(Constants.GO_TO_VIDEO_FRAGMENT) { _, bundle ->
             bundle.getSerializable(Constants.SET_ITEM_TO_VIDEO)
                 ?.let { item ->
@@ -93,12 +93,14 @@ class VideoFragment : BaseFragment<FragmentVideoBinding, VideoViewModel>() {
         online.observe(viewLifecycleOwner) { isConnect ->
             if (!isConnect) {
                 binding.llMain.visibility = View.GONE
+                binding.toolbar.visibility = View.GONE
                 binding.llInclude.visibility = View.VISIBLE
             }
             binding.layoutNoConnection.btnAgain.setOnClickListener {
                 if (isConnect) {
                     binding.llMain.visibility = View.VISIBLE
                     binding.llInclude.visibility = View.GONE
+                    binding.toolbar.visibility = View.VISIBLE
                 }
             }
         }
