@@ -25,18 +25,15 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView()
-        initListener()
-        initLiveData()
         checkConnection()
+        initListener()
+        initView()
+        initLiveData()
+
     }
-
-    abstract fun initListener()
-
-    abstract fun initView()
-
     abstract fun checkConnection()
-
+    abstract fun initListener()
+    abstract fun initView()
     abstract fun initLiveData()
     override fun onDestroy() {
         super.onDestroy()

@@ -31,7 +31,7 @@ class DetailItemFragment : BaseFragment<FragmentDetailItemBinding, DetailItemsVi
     ) = FragmentDetailItemBinding.inflate(inflater, container, false)
 
     override fun initListener() {
-       // TODO("Not yet implemented")
+        // TODO("Not yet implemented")
     }
 
     override fun initView() {
