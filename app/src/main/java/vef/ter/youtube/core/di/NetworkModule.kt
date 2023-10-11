@@ -7,7 +7,6 @@ import vef.ter.youtube.core.network.provideOkHttpClient
 import vef.ter.youtube.core.network.provideRetrofitClient
 
 val networkMode = module {
-    single { }
     single { provideInterceptor() }
     single { provideOkHttpClient(get()) }
     factory { provideRetrofitClient(get()) }

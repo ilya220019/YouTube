@@ -29,14 +29,11 @@ class PlayListFragment : BaseFragment<FragmentPlayListBinding, PlaylistsViewMode
         inflater: LayoutInflater, container: ViewGroup?
     ) = FragmentPlayListBinding.inflate(inflater, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        connect()
-        initView()
-        initLiveData()
+    override fun initListener() {
+ //       TODO("Not yet implemented")
     }
 
-    private fun initLiveData() {
+    override fun initLiveData() {
         viewModel.playlists.observe(viewLifecycleOwner) { list ->
             init(list.items)
         }
@@ -53,7 +50,7 @@ class PlayListFragment : BaseFragment<FragmentPlayListBinding, PlaylistsViewMode
         }
     }
 
-    private fun connect() {
+    override fun checkConnection() {
         aOnline.observe(viewLifecycleOwner) { isConnect ->
             if (!isConnect) {
                 binding.rv.visibility = View.GONE
@@ -74,7 +71,7 @@ class PlayListFragment : BaseFragment<FragmentPlayListBinding, PlaylistsViewMode
     }
 
 
-    private fun initView() {
+    override fun initView() {
         viewModel.getPlaylists()
         viewModel.playlists.observe(viewLifecycleOwner) {
             adapter.addData(it.items)

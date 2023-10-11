@@ -23,10 +23,23 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : Fragment() {
         _binding = inflaterViewBinding(inflater, container)
         return binding.root
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        initListener()
+        initLiveData()
+        checkConnection()
+    }
 
+    abstract fun initListener()
+
+    abstract fun initView()
+
+    abstract fun checkConnection()
+
+    abstract fun initLiveData()
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-
 }

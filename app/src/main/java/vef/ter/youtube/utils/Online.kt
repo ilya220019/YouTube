@@ -44,6 +44,4 @@ class Online(context: Context) : LiveData<Boolean>() {
         }
         return managerCallback
     }
-
-
 }

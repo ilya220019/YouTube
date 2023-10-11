@@ -30,18 +30,26 @@ class DetailItemFragment : BaseFragment<FragmentDetailItemBinding, DetailItemsVi
         container: ViewGroup?
     ) = FragmentDetailItemBinding.inflate(inflater, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initResultListener()
-        checkConnection()
-        initLiveData()
+    override fun initListener() {
+       // TODO("Not yet implemented")
     }
 
-    private fun initView(playlistId: String) {
+    override fun initView() {
+        setFragmentResultListener(Constants.GO_TO_DETAIL_FRAGMENT) { _, bundle ->
+            bundle.getSerializable(Constants.SET_ITEM)
+                ?.let { item ->
+                    val _item = item as PlayListsModel.Item
+                    initCoordinat(_item)
+                    initView1(_item.id)
+                }
+        }
+    }
+
+    private fun initView1(playlistId: String) {
         viewModel.getPlaylistItems(playlistId)
     }
 
-    private fun initLiveData() {
+    override fun initLiveData() {
         viewModel.playlistItems.observe(viewLifecycleOwner) { list ->
             init(list.items)
         }
@@ -63,7 +71,7 @@ class DetailItemFragment : BaseFragment<FragmentDetailItemBinding, DetailItemsVi
         binding.rvPlaylistItems.adapter = adapter
     }
 
-    private fun checkConnection() {
+    override fun checkConnection() {
         online.observe(viewLifecycleOwner) { isConnect ->
             if (!isConnect) {
                 binding.llItems.visibility = View.GONE
@@ -78,16 +86,6 @@ class DetailItemFragment : BaseFragment<FragmentDetailItemBinding, DetailItemsVi
         }
     }
 
-    private fun initResultListener() {
-        setFragmentResultListener(Constants.GO_TO_DETAIL_FRAGMENT) { _, bundle ->
-            bundle.getSerializable(Constants.SET_ITEM)
-                ?.let { item ->
-                    val _item = item as PlayListsModel.Item
-                    initCoordinat(_item)
-                    initView(_item.id)
-                }
-        }
-    }
 
     @SuppressLint("SetTextI18n")
     private fun initCoordinat(item: PlayListsModel.Item) {

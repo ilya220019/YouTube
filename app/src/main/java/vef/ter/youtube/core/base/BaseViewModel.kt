@@ -26,7 +26,6 @@ open class BaseViewModel : ViewModel() {
                         _error.postValue(it.message)
                 }
             }
-
             _loading.postValue(false)
         }
     }

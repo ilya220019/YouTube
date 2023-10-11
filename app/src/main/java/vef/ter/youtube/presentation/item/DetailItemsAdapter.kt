@@ -41,6 +41,5 @@ class DetailItemsAdapter(private val onClickItem: (playlistItem: PlayListsModel.
             binding.imgVideo.load(item.snippet.thumbnails.default.url)
             itemView.setOnClickListener { onClickItem(item) }
         }
-
     }
 }
