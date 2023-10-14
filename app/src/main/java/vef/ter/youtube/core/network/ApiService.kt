@@ -15,8 +15,9 @@ interface ApiService {
         @Query("channelId")
         channelId: String,
         @Query("maxResults")
-        maxResult: Int
-
+        maxResult: Int,
+        @Query("pageToken")
+        nextPageToken: String
     ): Response<PlayListsModel>
 
     @GET("playlistItems")
@@ -24,7 +25,8 @@ interface ApiService {
         @Query("part") part: String,
         @Query("key") apiKey: String,
         @Query("playlistId") playlistId: String,
-        @Query("maxResults") maxResults: Int
+        @Query("maxResults") maxResults: Int,
+        @Query("pageToken") nextPageToken: String
     ): Response<PlayListsModel>
 
     @GET("videos")

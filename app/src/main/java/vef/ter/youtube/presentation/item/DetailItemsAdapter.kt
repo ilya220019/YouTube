@@ -2,22 +2,23 @@ package vef.ter.youtube.presentation.item
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import vef.ter.youtube.data.model.PlayListsModel
 import vef.ter.youtube.databinding.ItemForPlaylistBinding
 
-class DetailItemsAdapter(private val onClickItem: (playlistItem: PlayListsModel.Item) -> Unit) :
-    RecyclerView.Adapter<DetailItemsAdapter.PlaylistItemsViewHolder>() {
+class DetailItemsAdapter(
+    diffUtilCallback: DiffUtil.ItemCallback<PlayListsModel.Item>,
+    private val onClickItem: (playlistItem: PlayListsModel.Item) -> Unit
+) :
+    PagingDataAdapter<PlayListsModel.Item, DetailItemsAdapter.PlaylistItemsViewHolder>(
+        diffUtilCallback
+    ) {
 
-    private var _list = mutableListOf<PlayListsModel.Item>()
-    private val list: List<PlayListsModel.Item> get() = _list
+    private val list = mutableListOf<PlayListsModel.Item>()
 
-    fun addData(playlistModelItem: List<PlayListsModel.Item>) {
-        _list.clear()
-        _list.addAll(playlistModelItem)
-        notifyItemRangeInserted(_list.size, playlistModelItem.size - _list.size)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PlaylistItemsViewHolder(
         ItemForPlaylistBinding.inflate(
@@ -30,7 +31,10 @@ class DetailItemsAdapter(private val onClickItem: (playlistItem: PlayListsModel.
     override fun getItemCount() = list.size
 
     override fun onBindViewHolder(holder: PlaylistItemsViewHolder, position: Int) {
-        holder.bind(list[position])
+        val newPosition = getItem(position)
+        newPosition?.let {
+            holder.bind(it)
+        }
     }
 
     inner class PlaylistItemsViewHolder(private val binding: ItemForPlaylistBinding) :

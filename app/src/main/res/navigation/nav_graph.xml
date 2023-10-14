@@ -9,7 +9,11 @@
         android:id="@+id/playListFragment"
         android:name="vef.ter.youtube.presentation.playlists.PlayListFragment"
         android:label="fragment_play_list"
-        tools:layout="@layout/fragment_play_list" />
+        tools:layout="@layout/fragment_play_list" >
+        <action
+            android:id="@+id/action_playListFragment_to_detailItemFragment"
+            app:destination="@id/detailItemFragment" />
+    </fragment>
     <fragment
         android:id="@+id/detailItemFragment"
         android:name="vef.ter.youtube.presentation.item.DetailItemFragment"

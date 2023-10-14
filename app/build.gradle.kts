@@ -80,4 +80,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     //player
     implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+    //paging 3
+    val paging_version = "3.2.1"
+
+    implementation("androidx.paging:paging-runtime:$paging_version")
 }

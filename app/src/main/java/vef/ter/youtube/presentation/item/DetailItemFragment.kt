@@ -1,7 +1,7 @@
 package vef.ter.youtube.presentation.item
 
 import android.annotation.SuppressLint
-import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,17 +9,22 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import vef.ter.youtube.R
 import vef.ter.youtube.core.base.BaseFragment
 import vef.ter.youtube.data.model.PlayListsModel
 import vef.ter.youtube.databinding.FragmentDetailItemBinding
+import vef.ter.youtube.presentation.item.paging_load.DetailLoadAdapter
 import vef.ter.youtube.utils.Constants
 import vef.ter.youtube.utils.Online
+import vef.ter.youtube.utils.UserComparator
 
 class DetailItemFragment : BaseFragment<FragmentDetailItemBinding, DetailItemsViewModel>() {
-    private val adapter = DetailItemsAdapter(this::onClickItem)
+    private val adapter = DetailItemsAdapter(UserComparator, this::onClickItem)
     override val viewModel: DetailItemsViewModel by viewModel()
     private val online: Online by lazy {
         Online(requireContext())
@@ -35,25 +40,31 @@ class DetailItemFragment : BaseFragment<FragmentDetailItemBinding, DetailItemsVi
     }
 
     override fun initView() {
+
+    }
+
+    override fun initLiveData() {
         setFragmentResultListener(Constants.GO_TO_DETAIL_FRAGMENT) { _, bundle ->
             bundle.getSerializable(Constants.SET_ITEM)
                 ?.let { item ->
                     val _item = item as PlayListsModel.Item
-                    initCoordinat(_item)
-                    initView1(_item.id)
+                    setView(_item)
+
+                    Log.e("ololo", "initLiveData: ${_item.id}")
+                    viewModel.getPagingPlaylists(_item.id).observe(viewLifecycleOwner) {
+                        binding.rvPlaylistItems.adapter = adapter.withLoadStateHeaderAndFooter(
+                            header = DetailLoadAdapter(),
+                            footer = DetailLoadAdapter()
+                        )
+                        viewModel.viewModelScope.launch(Dispatchers.IO) {
+                            lifecycle
+                            adapter.submitData(it)
+                        }
+                        adapter.retry()
+                        adapter.refresh()
+                    }
                 }
         }
-    }
-
-    private fun initView1(playlistId: String) {
-        viewModel.getPlaylistItems(playlistId)
-    }
-
-    override fun initLiveData() {
-        viewModel.playlistItems.observe(viewLifecycleOwner) { list ->
-            init(list.items)
-        }
-
         viewModel.loading.observe(viewLifecycleOwner) { loading ->
             if (loading)
                 binding.progressBar.visibility = View.VISIBLE
@@ -64,11 +75,6 @@ class DetailItemFragment : BaseFragment<FragmentDetailItemBinding, DetailItemsVi
         viewModel.error.observe(viewLifecycleOwner) { error ->
             Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private fun init(items: List<PlayListsModel.Item>) {
-        adapter.addData(items)
-        binding.rvPlaylistItems.adapter = adapter
     }
 
     override fun checkConnection() {
@@ -88,7 +94,7 @@ class DetailItemFragment : BaseFragment<FragmentDetailItemBinding, DetailItemsVi
 
 
     @SuppressLint("SetTextI18n")
-    private fun initCoordinat(item: PlayListsModel.Item) {
+    private fun setView(item: PlayListsModel.Item) {
         binding.tvTitle.text = item.snippet.title
         binding.tvDescription.text = item.snippet.description
         binding.tvVideo.text = item.contentDetails.itemCount.toString() + " video series"
@@ -104,5 +110,5 @@ class DetailItemFragment : BaseFragment<FragmentDetailItemBinding, DetailItemsVi
         )
         findNavController().navigate(R.id.videoFragment)
     }
-}
 
+}
